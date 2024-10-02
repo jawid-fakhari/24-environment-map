@@ -223,6 +223,10 @@ const directionalLightHelper = new THREE.CameraHelper(
 );
 scene.add(directionalLightHelper);
 
+//Target, change the center of object for light
+directionalLight.target.position.set(0, 4, 0);
+directionalLight.target.updateMatrixWorld();
+
 /**
  * Animate
  */
