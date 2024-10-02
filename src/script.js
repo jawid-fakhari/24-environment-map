@@ -183,6 +183,11 @@ gui
   .max(10)
   .step(0.001)
   .name("lightZ");
+
+//cast shadow to the light
+directionalLight.castShadow = true;
+gui.add(directionalLight, "castShadow");
+
 /**
  * Renderer
  */
@@ -208,7 +213,15 @@ gui.add(renderer, "toneMapping", {
 });
 gui.add(renderer, "toneMappingExposure").min(0).max(10).step(0.001);
 
-//Shadows
+//Shadows, activating shadow map then cast it to light and objects
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+//Helper
+const directionalLightHelper = new THREE.CameraHelper(
+  directionalLight.shadow.camera
+);
+scene.add(directionalLightHelper);
 
 /**
  * Animate
