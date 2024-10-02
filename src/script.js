@@ -32,7 +32,7 @@ const scene = new THREE.Scene();
  * Environment Maps
  */
 scene.environmentIntensity = 1; //intensity of an enviroment on objects
-scene.backgroundBlurriness = 0.1;
+scene.backgroundBlurriness = 0;
 scene.backgroundIntensity = 5;
 // scene.backgroundRotation.x = 1;
 // scene.environmentRotation.x = 1;
@@ -53,16 +53,16 @@ gui
 
 // Loader Cube Texture
 
-// const environmentMap = cubeTextureLoader.load([
-//   "/environmentMaps/0/px.png",
-//   "/environmentMaps/0/nx.png",
-//   "/environmentMaps/0/py.png",
-//   "/environmentMaps/0/ny.png",
-//   "/environmentMaps/0/pz.png",
-//   "/environmentMaps/0/nz.png",
-// ]);
-// scene.environment = environmentMap;
-// scene.background = environmentMap;
+const environmentMap = cubeTextureLoader.load([
+  "/environmentMaps/0/px.png",
+  "/environmentMaps/0/nx.png",
+  "/environmentMaps/0/py.png",
+  "/environmentMaps/0/ny.png",
+  "/environmentMaps/0/pz.png",
+  "/environmentMaps/0/nz.png",
+]);
+scene.environment = environmentMap;
+scene.background = environmentMap;
 
 // //HDR (RGBE) equirectangular
 // rgbeLoader.load("/environmentMaps/0/2k.hdr", (environmentMap) => {
@@ -80,14 +80,14 @@ gui
 // });
 
 //JPG file
-const environmentMap = textureLoader.load(
-  "/environmentMaps/blockadesLabsSkybox/anime_art_style_japan_streets_with_cherry_blossom_.jpg"
-);
-environmentMap.mapping = THREE.EquirectangularReflectionMapping;
-environmentMap.colorSpace = THREE.SRGBColorSpace;
+// const environmentMap = textureLoader.load(
+//   "/environmentMaps/blockadesLabsSkybox/anime_art_style_japan_streets_with_cherry_blossom_.jpg"
+// );
+// environmentMap.mapping = THREE.EquirectangularReflectionMapping;
+// environmentMap.colorSpace = THREE.SRGBColorSpace;
 
-scene.background = environmentMap;
-scene.environment = environmentMap;
+// scene.background = environmentMap;
+// scene.environment = environmentMap;
 /**
  * Torus Knot
  */
@@ -160,6 +160,21 @@ const renderer = new THREE.WebGLRenderer({
 });
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+// Realistic render
+//
+//Tone mapping
+renderer.toneMapping = THREE.ReinhardToneMapping;
+renderer.toneMappingExposure = 2;
+
+gui.add(renderer, "toneMapping", {
+  No: THREE.NoToneMapping,
+  Linear: THREE.LinearToneMapping,
+  Reinhard: THREE.ReinhardToneMapping,
+  Cineon: THREE.CineonToneMapping,
+  ACESFilmic: THREE.ACESFilmicToneMapping,
+});
+gui.add(renderer, "toneMappingExposure").min(0).max(10).step(0.001);
 
 /**
  * Animate
