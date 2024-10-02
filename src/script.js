@@ -26,11 +26,24 @@ const scene = new THREE.Scene();
 scene.environmentIntensity = 1; //intensity of an enviroment on objects
 scene.backgroundBlurriness = 0.1;
 scene.backgroundIntensity = 5;
+// scene.backgroundRotation.x = 1;
+// scene.environmentRotation.x = 1;
 
 gui.add(scene, "environmentIntensity").min(0).max(10).step(0.001);
 gui.add(scene, "backgroundBlurriness").min(0).max(1).step(0.001);
 gui.add(scene, "backgroundIntensity").min(0).max(10).step(0.001);
-//Loader Cube Texture
+gui
+  .add(scene.backgroundRotation, "y")
+  .min(0)
+  .max(Math.PI * 2)
+  .step(0.001);
+gui
+  .add(scene.environmentRotation, "y")
+  .min(0)
+  .max(Math.PI * 2)
+  .step(0.001);
+
+// Loader Cube Texture
 const environmentMap = cubeTextureLoader.load([
   "/environmentMaps/0/px.png",
   "/environmentMaps/0/nx.png",
