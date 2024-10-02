@@ -31,7 +31,7 @@ const environmentMap = cubeTextureLoader.load([
   "/environmentMaps/0/pz.png",
   "/environmentMaps/0/nz.png",
 ]);
-
+scene.environment = environmentMap;
 scene.background = environmentMap;
 
 /**
@@ -39,9 +39,13 @@ scene.background = environmentMap;
  */
 const torusKnot = new THREE.Mesh(
   new THREE.TorusKnotGeometry(1, 0.4, 100, 16),
-  new THREE.MeshBasicMaterial()
+  new THREE.MeshStandardMaterial({
+    roughness: 0.3,
+    metalness: 1,
+    color: 0xaaaaaa,
+  })
 );
-torusKnot.position.y = 4;
+torusKnot.position.set(-4, 4, 0);
 scene.add(torusKnot);
 
 /**
