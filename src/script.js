@@ -217,7 +217,7 @@ gui.add(renderer, "toneMappingExposure").min(0).max(10).step(0.001);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 directionalLight.shadow.camera.far = 15;
-directionalLight.shadow.mapSize.set(1024, 1024);
+directionalLight.shadow.mapSize.set(512, 512); //mapsize is used to give resolution to the shadow, higher resolution affect performane
 
 //Helper
 const directionalLightHelper = new THREE.CameraHelper(
