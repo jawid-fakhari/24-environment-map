@@ -153,6 +153,37 @@ controls.target.y = 3.5;
 controls.enableDamping = true;
 
 /**
+ * Lights
+ */
+const directionalLight = new THREE.DirectionalLight("#ffffff", 6);
+directionalLight.position.set(3, 7, 6);
+scene.add(directionalLight);
+
+gui
+  .add(directionalLight, "intensity")
+  .min(0)
+  .max(10)
+  .step(0.001)
+  .name("lightIntensity");
+gui
+  .add(directionalLight.position, "x")
+  .min(-10)
+  .max(10)
+  .step(0.001)
+  .name("lightX");
+gui
+  .add(directionalLight.position, "y")
+  .min(-10)
+  .max(10)
+  .step(0.001)
+  .name("lightY");
+gui
+  .add(directionalLight.position, "z")
+  .min(-10)
+  .max(10)
+  .step(0.001)
+  .name("lightZ");
+/**
  * Renderer
  */
 const renderer = new THREE.WebGLRenderer({
@@ -176,6 +207,8 @@ gui.add(renderer, "toneMapping", {
   ACESFilmic: THREE.ACESFilmicToneMapping,
 });
 gui.add(renderer, "toneMappingExposure").min(0).max(10).step(0.001);
+
+//Shadows
 
 /**
  * Animate
