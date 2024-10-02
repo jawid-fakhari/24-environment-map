@@ -2,10 +2,12 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import GUI from "lil-gui";
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
+
 /**
  * Loaders
  */
 const gltfLoader = new GLTFLoader();
+const cubeTextureLoader = new THREE.CubeTextureLoader();
 /**
  * Base
  */
@@ -17,6 +19,20 @@ const canvas = document.querySelector("canvas.webgl");
 
 // Scene
 const scene = new THREE.Scene();
+
+/**
+ * Environment Maps
+ */
+const environmentMap = cubeTextureLoader.load([
+  "/environmentMaps/0/px.png",
+  "/environmentMaps/0/nx.png",
+  "/environmentMaps/0/py.png",
+  "/environmentMaps/0/ny.png",
+  "/environmentMaps/0/pz.png",
+  "/environmentMaps/0/nz.png",
+]);
+
+scene.background = environmentMap;
 
 /**
  * Torus Knot
@@ -34,6 +50,7 @@ scene.add(torusKnot);
 let model = null;
 gltfLoader.load("/models/FlightHelmet/glTF/FlightHelmet.gltf", (gltf) => {
   model = gltf.scene;
+  model.scale.set(10, 10, 10);
   scene.add(model);
 });
 
