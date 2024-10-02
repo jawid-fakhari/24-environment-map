@@ -216,6 +216,8 @@ gui.add(renderer, "toneMappingExposure").min(0).max(10).step(0.001);
 //Shadows, activating shadow map then cast it to light and objects
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+directionalLight.shadow.camera.far = 15;
+directionalLight.shadow.mapSize.set(1024, 1024);
 
 //Helper
 const directionalLightHelper = new THREE.CameraHelper(
@@ -227,6 +229,16 @@ scene.add(directionalLightHelper);
 directionalLight.target.position.set(0, 4, 0);
 directionalLight.target.updateMatrixWorld();
 
+//Update all Materials
+const updateAllMaterials = () => {
+  scene.traverse((child) => {
+    if (child.isMesh) {
+      // Activate shadow here
+      child.castShadow = true;
+      child.receiveShadow = true;
+    }
+  });
+};
 /**
  * Animate
  */
@@ -234,6 +246,9 @@ const clock = new THREE.Clock();
 const tick = () => {
   // Time
   const elapsedTime = clock.getElapsedTime();
+
+  //cast and recieve shadow on all materials
+  updateAllMaterials();
 
   // Update controls
   controls.update();
